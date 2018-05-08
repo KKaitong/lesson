@@ -1,0 +1,2 @@
+test  things
+汉字会不会乱码

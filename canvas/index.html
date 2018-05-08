@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #rain {
+            display: block;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="rain"></canvas>
+<script>
+    /*
+    *1: 语言  语法 模块
+    *
+    *1:canvas 大小
+    *       1.1获取canvas
+    *       1.2获取浏览器高度 BOM 接口
+    *       1.3 设置canvas 高低压
+    *       1.4 监听浏览器变化 重新设置高度
+    *2： 如何绘制
+    *       2.1： 找到可会知区域
+    *       2.2:  拿起一直笔 + 颜色
+    *         fill: 实心；
+    *         stroke: 空心
+    *       2.3： 构思画上面图形
+    *          arc 元需报废
+    *          rect 矩形
+    *       2.4 作画
+    *3： 动起来
+    *4: 画很多
+    *       4.1： 位置不同
+    *       4.2： 下降速度不一样
+    *       4.3： 绽放位置不一样
+    *
+    * */
+    let canvas = document.querySelector('#rain')
+    let w
+    let h
+    let aRain= [] // 存放所有的雨滴
+    function setSize(){
+        window.onresize = arguments.callee;
+        w = window.innerWidth;
+        h = window.innerHeight;
+        canvas.width = w;
+        canvas.height = h;
+    }
+    setSize()
+
+    let canCon = canvas.getContext('2d')
+    // canCon.fillStyle = 'red'
+    // canCon.strokeStyle = 'red' //空心
+    // canCon.arc(233, 233, 66, 0, Math.PI*2) //构思一个圆， 位置 x y 半径
+    // canCon.fill() //画
+    // canCon.rect(22,22,66,66)
+    // canCon.stroke()
+    // let y = 233
+    // setInterval(function () {
+    //     // canCon.beginPath() //抬起笔
+    //     canCon.fillStyle= 'rgba(0,0,0,.01)'
+    //     // canCon.clearRect(0,0,w,h);  // 清除矩形区域
+    //     canCon.fillRect(233,0,w,h)
+    //     canCon.fill()
+    //     canCon.fillStyle = '#3ff'
+    //     canCon.fillRect(233,y++,2,10)
+    //     canCon.fill()
+    // },1000/60)
+    function random(min,max) { //返回 min 到 max
+        return Math.random()*(max - min) + min
+    }
+    function Rain() { //构造函数
+    }
+    Rain.prototype = {
+        init: function() {
+          this.x = random(0, w); //随机  从0 - w
+          this.y = 0; //随机  从0 - w
+          this.color = '#3ff';
+          this.speed = random(1,3) // 速度
+          this.h = random(0.7*h,0.8*h) // 降落位置
+          this.r = 1  //水 初始半径
+          this.maxR = random(50,100)
+        },
+        draw: function () {
+            if (this.y < this.h) {
+                canCon.fillStyle = this.color
+                canCon.fillRect(this.x,this.y,2,10)
+            } else {
+                canCon.beginPath()
+                canCon.strokeStyle = this.color
+                canCon.arc(this.x,this.y, this.r, 0 , Math.PI*2)
+                canCon.stroke()
+            }
+        },
+        move: function () {
+            if (this.y < this.h) {
+                this.y += this.speed
+            }
+            else {
+                if (this.r < this.maxR) {
+                    this.r++
+                }else {
+                    this.init()
+                }
+            }
+            this.draw()
+        }
+    }
+    function creatRian(num) {
+        for (var i =0 ; i< num; i++){
+            setTimeout(function () {
+                let rain =new Rain();  //函数赋值
+                rain.init();
+                rain.draw();
+                aRain.push(rain)
+            },500*i)
+        }
+    }
+    // let rain =new Rain();  //函数赋值
+    // rain.init();
+    // rain.draw();
+    creatRian(20)
+    setInterval(function () {
+        canCon.fillStyle= 'rgba(0,0,0,.05)'
+        canCon.fillRect(0,0,w,h)
+        for (let i of aRain) {
+            // i: 遍历数组
+            i.move()
+        }
+    },1000/60)
+</script>
+</body>
+</html>
