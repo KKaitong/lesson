@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="personinfo"></div>
+<div id="demo"></div>
+<script>
+    // 创建对象
+    function person(firstname, lastname, age, eyecolor) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.eyecolor = eyecolor
+        this.fullname = function () {
+            return this.firstname + this.lastname
+        }
+    }
+    let me = new person('Wang', 'Kaitong', '27', 'black')
+    let p = document.getElementById('personinfo')
+    let d = document.getElementById('demo')
+    p.innerHTML= 'name:' + me.firstname + me.lastname
+    d.innerHTML= 'name:' + me.fullname()
+
+    // javascript for...in... 循环
+    // for (variable in object)
+    /*
+   *  在对象中遍历  不能使用 boj.k  要使用 obj[k]
+   * */
+    let object = {name: 'Joshua', age: '20', sex: 'man'}
+    for (let k in object) {
+        console.log(k + ":" + object[k])
+    }
+    // Object.assign()
+    // 1、可以用作对象的复制
+    let obj = {a: 1}
+    let obj1 = {b: 2}
+    let copy = Object.assign({}, obj, obj1)
+    console.log(obj)
+    console.log(obj1)
+    console.log(copy)
+    // 2、可以用作对象的合并
+    var o1 = { a: 1 };
+    var o2 = { b: 2 };
+    var o3 = { c: 3 };
+    var objcontent = Object.assign(o1, o2, o3);
+    console.log(objcontent); // { a: 1, b: 2, c: 3 }
+    console.log(o1);  // { a: 1, b: 2, c: 3 }, 注意目标对象自身也会改变。
+
+
+    var objspc = Object.create(
+        {foo: 1},
+        { // foo 是个继承属性。
+        bar: {
+            value: 2  // bar 是个不可枚举属性。
+        },
+        baz: {
+            value: 3,
+            enumerable: true  // baz 是个自身可枚举属性。
+        }});
+
+    var copyspc = Object.assign({}, objspc);
+    console.log(copyspc); // { baz: 3 }
+
+
+    function Person(name, age) {
+        this.getName = function() { return name; };
+        this.setName = function(newName) { name = newName; };
+        this.getAge = function() { return age; };
+        this.setAge = function(newAge) { age = newAge; };
+
+        //未在构造函数中初始化的属性
+        var occupation;
+        this.getOccupation = function() { return occupation; };
+        this.setOccupation = function(newOcc) { occupation =
+            newOcc; };
+    }
+    let newPerson = new Person('Joshua', '28')
+     newPerson.setOccupation('test')
+     newPerson.setAge('27')
+     console.log(newPerson.getAge())
+     console.log(newPerson.getOccupation())
+</script>
+</body>
+</html>

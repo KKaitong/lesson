@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script src="function.js"></script>
+<script src="jspage.js"></script>
+<script>
+     x = 1
+    let y
+    function addPlus() {
+        this.x = this.x + x
+        console.log('in---plus--->' + this.x)
+        console.log('-----plus--->' + x)
+        return x += 1
+    }
+    let num = addPlus()
+    let minues = _minues()
+    let tow = addTwoOneStep()
+    // console.log('----self----' + num)
+    console.log('----js----' + minues)
+    console.log('----selfunction----' + tow)
+</script>
+<script>
+    console.log('another------>' + x)
+</script>
+</body>
+</html>
