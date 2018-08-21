@@ -77,6 +77,8 @@ p{
     margin-top:-100px;
     margin-left:-150px;
 }
-.btn{padding:10px; border-radius:6px;
+.btn{
+    padding:10px;
+    border-radius:6px;
     background-color:#9f8b77; color:#fff; cursor:pointer;
 }

@@ -11,11 +11,12 @@ var game={
         //r从0开始，到<RN结束，每次增1，同时声明空数组arr
         for(var r=0,arr=[];r<this.RN;r++){
             //  c从0开始，到<CN结束，每次增1
-            for(var c=0;c<this.CN;arr.push(""+r+c++));
+            for(var c=0;c<this.CN;arr.push(""+ r + c++));
         }
         return '<div id="g' + arr.join('" class="grid"></div><div id="g') +'" class="grid"></div>';
     },
-    getCellsHtml:function(){//生成所有前景格的html代码
+    //生成所有前景格的html代码
+    getCellsHtml:function(){
         for(var r=0,arr=[];r < this.RN; r++){
             for(var c = 0 ; c < this.CN; arr.push("" + r + c++));
         }
@@ -29,7 +30,8 @@ var game={
         gp.innerHTML=this.getGridsHtml()
             +this.getCellsHtml();
     },
-    start:function(){//游戏启动方法，启动游戏时调用
+    //游戏启动方法，启动游戏时调用
+    start:function(){
         this.init();
         this.state=this.RUNNING; //游戏状态改为启动
         //初始化数组为RN行，CN列的二维数组，所有元素为0
@@ -46,7 +48,9 @@ var game={
         this.randomNum();
         this.updateView();//将data的数据，更行到页面div
     },
-    isGameOver:function(){//判断当前游戏是否结束
+    //判断当前游戏是否结束
+    isGameOver:function(){
+        console.log(this.data)
         //遍历data中所有元素
         for(var r=0;r<this.data.length;r++){
             for(var c=0;c<this.data[r].length;c++){
@@ -69,7 +73,8 @@ var game={
         this.state=this.GAMEOVER;
         return true;//返回true
     },
-    randomNum:function(){//随机挑选一个位置，生成2或4
+    //随机挑选一个位置，生成2或4
+    randomNum:function(){
         if(!this.isFull()){//只有不满，才执行以下所有代码
             while(true){//反复执行
                 //    随机生成一个行下标，保存在r中
@@ -86,7 +91,8 @@ var game={
             }
         }
     },
-    isFull:function(){//专门用来判断数组是否已满
+    //专门用来判断数组是否已满
+    isFull:function(){
         //遍历data中每个元素
         for(var r=0;r<this.data.length;r++){
             for(var c=0;c<this.data[r].length;c++){
@@ -134,7 +140,8 @@ var game={
             gameover.style.display="none";
         }
     },
-    moveLeft:function(){//左移所有行
+    //左移所有行
+    moveLeft:function(){
         var before=this.data.toString();
         for(var r=0;r<this.data.length;r++){
             this.moveLeftInRow(r);
@@ -146,7 +153,8 @@ var game={
             this.updateView(); //更新界面
         }
     },
-    moveLeftInRow:function(r){//左移第r行
+    //左移第r行
+    moveLeftInRow:function(r){
         for(var c=0;c<this.data[r].length-1;c++){
             //从c开始，找下一个不为0的位置下标next
             var next=this.getRightNext(r,c);
@@ -166,7 +174,8 @@ var game={
             }
         }
     },
-    getRightNext:function(r,c){//专门找当前位置右侧下一个
+    //专门找当前位置右侧下一个
+    getRightNext:function(r,c){
         //从c+1开始遍历之后所有元素
         for(var next=c+1;next<this.data[r].length;next++){
             if(this.data[r][next]!=0){//如果找到!=0的
@@ -283,7 +292,7 @@ var game={
             this.updateView();
         }
     },
-    moveDownInCol:function(c){
+    moveDownInCol: function(c){
         /*r从最后一行开始,向上遍历当前列每个元素
           到>0结束，每次递减1*/
         for(var r=this.data.length-1;r>0;r--){
@@ -321,7 +330,7 @@ var game={
     }
 }
 //当页面加载后，启动游戏
-window.onload=function(){
+window.onload = function(){
     game.start();
     //当按键按下时
     document.onkeydown=function(){
